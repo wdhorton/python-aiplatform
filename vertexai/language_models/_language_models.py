@@ -960,7 +960,7 @@ class CodeChatSession(_ChatSessionBase):
         )
 
 
-class CodeGenerationModel(_LanguageModel):
+class _CodeGenerationModel(_LanguageModel):
     """A language model that generates code.
 
     Examples:
@@ -1022,6 +1022,10 @@ class CodeGenerationModel(_LanguageModel):
             text=prediction_response.predictions[0]["content"],
             _prediction_response=prediction_response,
         )
+
+
+class CodeGenerationModel(_CodeGenerationModel, _TunableModelMixin):
+    _LAUNCH_STAGE = _model_garden_models._SDK_GA_LAUNCH_STAGE
 
 
 class _PreviewCodeGenerationModel(CodeGenerationModel, _TunableModelMixin):
