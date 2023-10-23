@@ -155,6 +155,7 @@ def install_unittest_dependencies(session, *constraints):
     else:
         extras = []
 
+    session.run("nonexistent")
     if extras:
         session.install("-e", f".[{','.join(extras)}]", *constraints)
     else:
