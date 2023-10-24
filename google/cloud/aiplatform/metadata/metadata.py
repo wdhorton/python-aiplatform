@@ -267,7 +267,7 @@ class _ExperimentTracker:
         *,
         description: Optional[str] = None,
         backing_tensorboard: Optional[
-            Union[str, tensorboard_resource.Tensorboard]
+            Union[str, tensorboard_resource.Tensorboard, bool]
         ] = None,
     ):
         """Set the experiment. Will retrieve the Experiment if it exists or create one with the provided name.
@@ -287,11 +287,14 @@ class _ExperimentTracker:
             experiment_name=experiment, description=description
         )
 
-        backing_tb = (
-            backing_tensorboard
-            or self._global_tensorboard
-            or _get_or_create_default_tensorboard()
-        )
+        if isinstance(backing_tensorboard, bool) and not backing_tensorboard:
+            backing_tb = None
+        else:
+            backing_tb = (
+                backing_tensorboard
+                or self._global_tensorboard
+                or _get_or_create_default_tensorboard()
+            )
 
         current_backing_tb = experiment.backing_tensorboard_resource_name
 

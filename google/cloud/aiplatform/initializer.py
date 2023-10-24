@@ -112,7 +112,7 @@ class _Config:
         experiment: Optional[str] = None,
         experiment_description: Optional[str] = None,
         experiment_tensorboard: Optional[
-            Union[str, tensorboard_resource.Tensorboard]
+            Union[str, tensorboard_resource.Tensorboard, bool]
         ] = None,
         staging_bucket: Optional[str] = None,
         credentials: Optional[auth_credentials.Credentials] = None,
@@ -177,7 +177,7 @@ class _Config:
                 "Experiment needs to be set in `init` in order to add experiment descriptions."
             )
 
-        if experiment_tensorboard:
+        if experiment_tensorboard and not isinstance(experiment_tensorboard, bool):
             metadata._experiment_tracker.set_tensorboard(
                 tensorboard=experiment_tensorboard,
                 project=project,
